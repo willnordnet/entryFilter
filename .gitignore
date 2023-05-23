@@ -1,0 +1,15 @@
+target
+.idea
+*.iml
+*.log
+*/.classpath
+*/.project
+*/.settings
+/input
+*.csv
+
+### Python template
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
