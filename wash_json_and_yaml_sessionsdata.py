@@ -40,23 +40,27 @@ for row in rows:
     selected_values = []
     if is_valid_json(row[0]):
         json_data = json.loads(row[0])
-        selected_values.append("customer no=" + str(json_data["cstno"]))
-        for account in json_data["accounts"]:
-            selected_values.append("account no=" + str(account["accno"]))
-            if "alias" in account:
-                selected_values.append("alias=" + account["alias"])
-            if "nonbankaccount" in account:
-                selected_values.append("bankaccount=" + account["nonbankaccount"])
+        if "cstno" in json_data:
+            selected_values.append("customer no=" + str(json_data["cstno"]))
+        if "account" in json_data:
+            for account in json_data["accounts"]:
+                selected_values.append("account no=" + str(account["accno"]))
+                if "alias" in account:
+                    selected_values.append("alias=" + account["alias"])
+                if "nonbankaccount" in account:
+                    selected_values.append("bankaccount=" + account["nonbankaccount"])
     elif is_valid_yaml(row[0]):
         yaml_data = yaml.safe_load(row[0])
-        selected_values.append("customer no=" + str(yaml_data.get("cstno")))
+        if "cstno" in yaml_data:
+            selected_values.append("customer no=" + str(yaml_data.get("cstno")))
         if "display_account" in yaml_data:
             selected_values.append("display account=" + str(yaml_data.get("display_account")))
-        accounts = yaml_data['nasa_accounts']
-        for account in accounts:
-            selected_values.append("account no=" + str(account))
-            if "alias" in accounts[account]:
-                selected_values.append("alias=" + str(accounts[account]['alias']))
+        if "nasa_accounts" in yaml_data:
+            accounts = yaml_data['nasa_accounts']
+            for account in accounts:
+                selected_values.append("account no=" + str(account))
+                if "alias" in accounts[account]:
+                    selected_values.append("alias=" + str(accounts[account]['alias']))
     else:
         print("Error! Invalid JSON/YAML sessionsdata: " + row[0])
 
